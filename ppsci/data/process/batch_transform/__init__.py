@@ -74,7 +74,6 @@ def default_collate_fn(batch: List[Any]) -> Any:
         graph.x = np.concatenate([g.x for g in batch])
         graph.y = np.concatenate([g.y for g in batch])
         graph.edge_index = np.concatenate([g.edge_index for g in batch], axis=1)
-
         graph.edge_attr = np.concatenate([g.edge_attr for g in batch])
         graph.pos = np.concatenate([g.pos for g in batch])
         graph.aoa = np.concatenate([g.aoa for g in batch])
