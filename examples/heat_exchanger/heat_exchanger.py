@@ -393,7 +393,7 @@ def train(cfg: DictConfig):
     plt.plot(x, y, label="t = 0.0 s")
     for i in range(10):
         y = pred["T_c"][cfg.NPOINT * i * 2 : cfg.NPOINT * (i * 2 + 1)].numpy()
-        plt.plot(x, y, label="t = {(i+1)*0.1:,.1f} s")
+        plt.plot(x, y, label=f"t = {(i+1)*0.1:,.1f} s")
     plt.xlabel("A")
     plt.ylabel(r"$T_c$")
     plt.legend()
@@ -405,7 +405,7 @@ def train(cfg: DictConfig):
     plt.plot(x, y, label="t = 0.0 s")
     for i in range(10):
         y = pred["T_w"][cfg.NPOINT * i * 2 : cfg.NPOINT * (i * 2 + 1)].numpy()
-        plt.plot(x, y, label="t = {(i+1)*0.1:,.1f} s")
+        plt.plot(x, y, label=f"t = {(i+1)*0.1:,.1f} s")
     plt.xlabel("A")
     plt.ylabel(r"$T_w$")
     plt.legend()
@@ -428,6 +428,10 @@ def train(cfg: DictConfig):
     plt.ylabel(r"$\eta$")
     plt.grid()
     plt.savefig("eta.png")
+    error = np.square(eta[-1] - cfg.eta_true)
+    logger.info(
+        f"The L2 norm error between the actual heat exchanger efficiency and the predicted heat exchanger efficiency is {error}"
+    )
 
 
 def evaluate(cfg: DictConfig):
@@ -597,7 +601,7 @@ def evaluate(cfg: DictConfig):
     plt.plot(x, y, label="t = 0.0 s")
     for i in range(10):
         y = pred["T_h"][cfg.NPOINT * i * 2 : cfg.NPOINT * (i * 2 + 1)].numpy()
-        plt.plot(x, y, label="t = {(i+1)*0.1:,.1f} s")
+        plt.plot(x, y, label=f"t = {(i+1)*0.1:,.1f} s")
     plt.xlabel("A")
     plt.ylabel(r"$T_h$")
     plt.legend()
@@ -609,7 +613,7 @@ def evaluate(cfg: DictConfig):
     plt.plot(x, y, label="t = 0.0 s")
     for i in range(10):
         y = pred["T_c"][cfg.NPOINT * i * 2 : cfg.NPOINT * (i * 2 + 1)].numpy()
-        plt.plot(x, y, label="t = {(i+1)*0.1:,.1f} s")
+        plt.plot(x, y, label=f"t = {(i+1)*0.1:,.1f} s")
     plt.xlabel("A")
     plt.ylabel(r"$T_c$")
     plt.legend()
@@ -621,7 +625,7 @@ def evaluate(cfg: DictConfig):
     plt.plot(x, y, label="t = 0.0 s")
     for i in range(10):
         y = pred["T_w"][cfg.NPOINT * i * 2 : cfg.NPOINT * (i * 2 + 1)].numpy()
-        plt.plot(x, y, label="t = {(i+1)*0.1:,.1f} s")
+        plt.plot(x, y, label=f"t = {(i+1)*0.1:,.1f} s")
     plt.xlabel("A")
     plt.ylabel(r"$T_w$")
     plt.legend()
@@ -644,6 +648,10 @@ def evaluate(cfg: DictConfig):
     plt.ylabel(r"$\eta$")
     plt.grid()
     plt.savefig("eta.png")
+    error = np.square(eta[-1] - cfg.eta_true)
+    logger.info(
+        f"The L2 norm error between the actual heat exchanger efficiency and the predicted heat exchanger efficiency is {error}"
+    )
 
 
 @hydra.main(version_base=None, config_path="./conf", config_name="heat_exchanger.yaml")
